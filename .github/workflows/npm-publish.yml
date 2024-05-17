@@ -19,7 +19,7 @@ jobs:
   changelog:
     # name:Changelog PR or Release
     # 这里判断仓库owner是否是我自己，为了避免别人 fork 仓库触发，请自行修改
-    if: ${{ github.repository_owner == 'nangongmoyan' }}
+    if: ${{ github.repository_owner == 'lizh606' }}
     runs-on: ubuntu-latest
     steps:
       # name:  当前 step 的名字
