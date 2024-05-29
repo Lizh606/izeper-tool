@@ -9,10 +9,16 @@ on:
     branches:
       - main
 
+
 # 默认shell
 defaults:
   run:
     shell: bash
+
+    
+permissions:
+  contents: write
+  packages: write
 
 # 任务，定义个changelog 的任务
 jobs:
