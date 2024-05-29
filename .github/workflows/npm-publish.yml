@@ -48,7 +48,7 @@ jobs:
         with:
           # 执行更新版本和发布的命令
           version: npm run version
-          publish: npm exec changeset publish
+          publish: npm exec changeset publish --access public
           commit: "[ci] release"
           title: "[ci] release"
         env:
