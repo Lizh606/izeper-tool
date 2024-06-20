@@ -17,5 +17,14 @@ function sleep(timeout:number) {
         setTimeout(resolve, timeout);
     })
 }
-export { sleep, sum };
+
+/**
+ * @description: 获取报错信息
+ * @param {key} 报错字段
+ * @return {*}
+ */
+function getErrorMsg(key: string)  {
+  return `${key}不能为空`
+}
+export { getErrorMsg, sleep, sum };
 
