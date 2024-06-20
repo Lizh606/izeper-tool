@@ -1,5 +1,11 @@
 # izeper-tool
 
+## 0.0.9
+
+### Patch Changes
+
+- b6401e5: testPublish
+
 ## 0.0.8
 
 ### Patch Changes
