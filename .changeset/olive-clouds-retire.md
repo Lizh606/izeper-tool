@@ -1,0 +1,5 @@
+---
+"izeper-tool": patch
+---
+
+getErrorMsg
