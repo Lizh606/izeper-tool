@@ -26,5 +26,9 @@ function sleep(timeout:number) {
 function getErrorMsg(key: string)  {
   return `${key}不能为空`
 }
-export { getErrorMsg, sleep, sum };
+
+function testPublish() {
+    console.log(111);
+}
+export { getErrorMsg, sleep, sum, testPublish };
 

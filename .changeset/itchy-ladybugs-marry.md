@@ -2,4 +2,4 @@
 "izeper-tool": patch
 ---
 
-getErrorMsg
+testPublish
