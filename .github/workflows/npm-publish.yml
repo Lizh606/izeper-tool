@@ -1,65 +1,51 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+# 这个工作流将在使用 Node.js 运行测试后，当创建发布时将包发布到 GitHub Packages
+# 更多信息参见：https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: Node.js Package
 
-# 触发时机，在 main 分支 push 操作触发
+# 触发时机，在 main 分支 push 操作时触发
 on:
   push:
     branches:
       - main
 
-
-# 默认shell
+# 默认 shell 设置
 defaults:
   run:
     shell: bash
 
-    
+# 设置权限
 permissions:
   contents: write
   packages: write
 
-# 任务，定义个changelog 的任务
+# 定义任务，自动生成 CHANGELOG
 jobs:
   changelog:
-    # name:Changelog PR or Release
-    # 这里判断仓库owner是否是我自己，为了避免别人 fork 仓库触发，请自行修改
-    if: ${{ github.repository_owner == 'Lizh606' }}
     runs-on: ubuntu-latest
     steps:
-      # name:  当前 step 的名字
-      - name: Checkout # 获取分支的代码和提交记录
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      # 设置 Node
-      - name: Setup Node.js # 设置 Node.js 的环境
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
-          # cache: 'npm'
+          node-version: '14'
 
-      # 安装依赖
       - name: Install dependencies
         run: npm install
 
-      # 打包
-      - name: Build Packages
-        run: npm run build
+      - name: Generate CHANGELOG
+        run: npx changeset version
 
-      # 这一步是最重要的。使用changesets/action自动创建 PR 或者发布
-      - name: Create Release Pull Request or Publish
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # 执行更新版本和发布的命令
-          version: npm run version
-          publish: npm exec changeset publish --access public
-          commit: "[ci] release"
-          title: "[ci] release"
+      - name: Commit CHANGELOG
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "ci: generate changelog"
+
+      - name: Publish package
         env:
-          # 这里需要几个 Token 变量
-          # GITHUB_TOKEN 是 CI 里自带的默认 token
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN 需要稍后在 npm 网站生成。
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
