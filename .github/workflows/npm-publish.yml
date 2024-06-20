@@ -17,6 +17,8 @@ defaults:
 permissions:
   contents: write
   packages: write
+  pull-requests: write
+  repository-projects: write
 
 # 任务，定义个changelog 的任务
 jobs:
